@@ -109,25 +109,25 @@ bool check(int x, int y){
     return check_x(x,y) & check_y(x,y) & check_box(x,y);
 }
 void print(){
-    // int cnt_quaternions[24] = {0};
-    // int diif_quaternions = 0;
-    // for(int j=0 ; j<SIZE ; j++){
-    //     for(int k=0 ; k<SIZE ; k++){
-    //         for(int i=0 ; i<24 ; i++){
-    //             if(permutation[i] && sudoku[j][k]){
-    //                 cnt_quaternions[i] = 1;
-    //             }
-    //         }
-    //     }
-    // }
-    // for(int i=0 ; i<24 ; i++){
-    //     diif_quaternions += cnt_quaternions[i];
-    // }
-    // if(diif_quaternions < 16){
-    //     return;
-    // }
+    int cnt_quaternions[24] = {0};
+    int diif_quaternions = 0;
+    for(int j=0 ; j<SIZE ; j++){
+        for(int k=0 ; k<SIZE ; k++){
+            for(int i=0 ; i<24 ; i++){
+                if(permutation[i] && sudoku[j][k]){
+                    cnt_quaternions[i] = 1;
+                }
+            }
+        }
+    }
+    for(int i=0 ; i<24 ; i++){
+        diif_quaternions += cnt_quaternions[i];
+    }
+    if(diif_quaternions < 16){
+        return;
+    }
     printf("-----solution %d-----\n", cnt);
-    // printf("%d different quaternions\n", diif_quaternions);
+    printf("%d different quaternions\n", diif_quaternions);
     // Tried to find solution with most different quaternions.
     for(int j=0 ; j<SIZE ; j++){
         for(int k=0 ; k<SIZE ; k++){
@@ -138,9 +138,20 @@ void print(){
 }
 void solve(int x, int y){
     if(x>=SIZE){
+        // if((sudoku[0][1]+sudoku[0][2]).norm_sq() == 102){
+        //     if((sudoku[3][1]+sudoku[3][2]).norm_sq() == 102){
+        //         if((sudoku[1][3]*sudoku[2][3]) && quaternion(-12,20,10,16)){
+        //             if((sudoku[1][1]+sudoku[1][2]+sudoku[2][1]+sudoku[2][2]) && quaternion(9,10,10,11)){
+        //                 cnt++;
+        //                 print();
+        //             }
+        //         }
+        //     }
+        // }
         cnt++;
         print();
         return;
+        
     }
     if(!(sudoku[x][y] && zero)){
         int next_y = y+1;
