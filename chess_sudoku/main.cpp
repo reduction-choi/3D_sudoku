@@ -55,7 +55,7 @@ bool check_piece(int x, int y, int piece){
             }
         }
     }
-    else if(piece == K || piece == P){ //분기점 2: Pawn은 제외
+    else if(piece == K){
         int dir[4][2] = {{-1,1},{-1,-1},{1,1},{1,-1}};
         for(int d=0 ; d<4 ; d++){
             if(x+dir[d][0] >= 0 && x+dir[d][0] < SIZE && y+dir[d][1] >=0 && y+dir[d][1] < SIZE && sudoku[x+dir[d][0]][y+dir[d][1]] == piece){
@@ -63,9 +63,17 @@ bool check_piece(int x, int y, int piece){
             }
         }
     }
+    else if(piece == P){ //분기점 2: Pawn은 위쪽으로만 이동 가능
+        int dir[2][2] = {{-1,1},{-1,-1}};
+        for(int d=0 ; d<2 ; d++){
+            if(x+dir[d][0] >= 0 && x+dir[d][0] < SIZE && y+dir[d][1] >=0 && y+dir[d][1] < SIZE && sudoku[x+dir[d][0]][y+dir[d][1]] == piece){
+                return false;
+            }
+        }
+    }
     return true;
 }
-bool check_box(int x, int y){//분기점 1: box조건 무시
+bool check_box(int x, int y){
     int box_x = (x/BOX_H)*BOX_H;
     int box_y = (y/BOX_W)*BOX_W;
     for(int i=0 ; i<BOX_H ; i++){
